@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewmodels="clr-namespace:LFLens.ViewModels"
+             mc:Ignorable="d"
+             x:Class="LFLens.Views.ItemsPage"
+             Title="LF Lens" Visual="Material"
+             x:Name="BrowseItemsPage">
+   
+    <ContentPage.ToolbarItems>
+        
+        <ToolbarItem Text="Back" x:Name="tbBack">
+            
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.BindingContext>
+        <viewmodels:ItemsViewModel />
+    </ContentPage.BindingContext>
+
+    <StackLayout BackgroundColor="White">
+        <ScrollView>
+            <StackLayout >
+
+                <Label x:Name="lblResult"  FontSize="Title" Visual="Material" />
+                <Button x:Name="clipboard" IsVisible="False" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="150" BackgroundColor="WhiteSmoke" Font="" Text="Clipboard"></Button>
+                <Image x:Name="imgChoosen" VerticalOptions="Center" WidthRequest="300" HeightRequest="300" Source="cameraicon.png" />
+                <Button 
+                x:Name="btnCapture"
+                Clicked="CaptureBtn_Clicked"
+               Text="Take From Camera" HorizontalOptions="Center"
+                    VerticalOptions="Center" TextColor="#FFF" BackgroundColor="#03DAC6" FontFamily="Rubik" WidthRequest="150" />
+
+                <Button
+                x:Name="btnGallery"
+                Clicked="GalleryBtn_Clicked"  HorizontalOptions="Center" Text="Pick From Gallery"
+                    VerticalOptions="Center" BackgroundColor="#03DAC6" FontFamily="Rubik" TextColor="#FFF" WidthRequest="150" />
+               
+            </StackLayout>
+        </ScrollView>
+    </StackLayout>
+    
+</ContentPage>

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="LFLens.Views.ItemDetailPage"
+             Title="{Binding List of Photos}">
+
+    <StackLayout Spacing="20" Padding="15">
+        <ListView x:Name="lvImage" Header="{Binding .}" ItemsSource="{Binding ImageListItem}" HasUnevenRows="True" >
+            <ListView.HeaderTemplate>
+                <DataTemplate>
+                    <ContentView>
+                        <Label Text="{Binding CreatedTime}"></Label>
+                    </ContentView>
+                </DataTemplate>
+            </ListView.HeaderTemplate>
+            <ListView.ItemTemplate>
+
+
+                <DataTemplate >
+                    <ViewCell>
+
+                        <StackLayout Padding="5,0,5,0" HorizontalOptions="StartAndExpand"  Orientation="Horizontal">
+                            <Image Source="{Binding ImageURL}" WidthRequest="150" HeightRequest="150"  />
+                            <StackLayout Orientation="Vertical">
+                                <Label Text="{Binding ImageDescription}" VerticalTextAlignment="Start" FontSize="Small" />
+                                <Label Text="{Binding Name}" VerticalTextAlignment="Start" FontSize="Micro" />
+
+
+
+                            </StackLayout>
+                        </StackLayout>
+
+                    </ViewCell>
+                </DataTemplate>
+
+            </ListView.ItemTemplate>
+
+
+        </ListView>
+    </StackLayout>
+    
+</ContentPage>
