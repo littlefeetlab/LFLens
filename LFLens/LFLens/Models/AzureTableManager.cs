@@ -23,7 +23,7 @@ namespace LFLens
             try
             {
                 // Get azure table storage connection string.
-                string ConnectionString = "DefaultEndpointsProtocol=https;AccountName=daniai;AccountKey=3yOSNs7q1otoa7ZZ7gA6ja7+MZSLfC/y4cXLPfeUG5nzudnwLDL5S+T+ZJdAkE54v+zt7mCAo9oPPydXeStxfg==;EndpointSuffix=core.windows.net";
+                string ConnectionString = OAuthConstants.ConnectionString;
 
                 CloudStorageAccount storageAccount = CloudStorageAccount.Parse(ConnectionString);
 

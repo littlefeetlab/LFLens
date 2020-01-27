@@ -328,22 +328,6 @@ namespace LFLens.Views
 
                    
 
-                    //Google.Apis.Drive.v3.FilesResource.CreateRequest request;
-
-                    //request = service.Files.Create(fileMetadata);
-                    //request.Fields = "id";
-                    //var file = request.Execute();
-                    //FilesResource.CreateMediaUpload request = service.Files.Insert(body, stream, "text/plain");
-                    //request.Upload();
-
-                    //File file = request.ResponseBody;
-
-                    //Application.Current.Properties.Add("LogFileID", file1.Id);
-                    //LogFileID = Application.Current.Properties["LogFileID"].ToString();
-                    //  var file1 = request.;
-                    //  Application.Current.Properties.Add("LogFileID", request);
-                    //  var  gdFileID = request;
-
                 }
                 else
                 {
@@ -360,18 +344,7 @@ namespace LFLens.Views
                         request.Upload();
                     }
                     var file1 = request.ResponseBody;
-                    //  LogFileID = "1Ip9Dt-gksQG85CFSDjIut5GSSHqTb3p-";
-
-                    //  byte[] byteArray = System.IO.File.ReadAllBytes(JSONFilepath);
-                    //System.IO.MemoryStream stream = new System.IO.MemoryStream(byteArray);
-                    //Google.Apis.Drive.v3.FilesResource.UpdateMediaUpload updateRequest = service.Files.Update(fileMetadata , LogFileID, stream, "text/plain");
-                    //updateRequest.Fields = "id,parents";
-
-                    //updateRequest.AddParents = RootFolderID;
-                    ////  updateRequest.RemoveParents = LogFileID;
-
-                    //var logfile = updateRequest.Upload();
-                    //  }
+                   
                 }
 
             }
