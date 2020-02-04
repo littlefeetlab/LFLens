@@ -28,6 +28,8 @@ namespace LFLens
         public bool IsStoreGooglePhotos { set; get; }
 
         public string CreatedTime { get; set; }
+        [JsonProperty("DriveFileID")]
+        public string DriveFileID { get; set; }
             
         public ImageDetails()
         {
@@ -42,6 +44,7 @@ namespace LFLens
             var JsonList = new List<ImageDetails>();
 
             string[] files = Directory.GetFiles(JSONFilepath);
+            
             foreach (var file in files)
             {
                

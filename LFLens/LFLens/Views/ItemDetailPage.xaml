@@ -4,11 +4,13 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
              x:Class="LFLens.Views.ItemDetailPage"
-             Title="{Binding List of Photos}">
+             Title="List of Photos">
 
     <StackLayout Spacing="20" Padding="15">
-        <ListView x:Name="lvImage" Header="{Binding .}" ItemsSource="{Binding ImageListItem}" HasUnevenRows="True" >
+        <ListView x:Name="lvImage" Header="{Binding .}" ItemsSource="{Binding ImageListItem}" HasUnevenRows="True" SeparatorVisibility="None" IsPullToRefreshEnabled="true"
+          RefreshControlColor="Red" IsRefreshing="True">
             <ListView.HeaderTemplate>
                 <DataTemplate>
                     <ContentView>
@@ -16,18 +18,34 @@
                     </ContentView>
                 </DataTemplate>
             </ListView.HeaderTemplate>
+         
             <ListView.ItemTemplate>
 
 
                 <DataTemplate >
                     <ViewCell>
 
-                        <StackLayout Padding="5,0,5,0" HorizontalOptions="StartAndExpand"  Orientation="Horizontal">
-                            <Image Source="{Binding ImageURL}" WidthRequest="150" HeightRequest="150"  />
+                        <StackLayout Padding="5,0,5,0" HorizontalOptions="StartAndExpand"  Orientation="Horizontal" Margin="10">
+                            <!--<Image Source="{Binding ImageURL}" WidthRequest="150" HeightRequest="150"  />-->
+                            <!--<controls:CircleImage Source="{Binding ImageURL}" Aspect="AspectFill" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                                <controls:CircleImage.WidthRequest>
+                                    <OnPlatform x:TypeArguments="x:Double">
+                                        <On Platform="Android, iOS">75</On>
+                                        <On Platform="WinPhone">100</On>
+                                    </OnPlatform>
+                                </controls:CircleImage.WidthRequest>
+                                <controls:CircleImage.HeightRequest>
+                                    <OnPlatform x:TypeArguments="x:Double">
+                                        <On Platform="Android, iOS">100</On>
+                                        <On Platform="WinPhone">150</On>
+                                    </OnPlatform>
+                                </controls:CircleImage.HeightRequest>
+                            </controls:CircleImage>-->
+                            <controls:CircleImage  Source="{Binding ImageURL}" WidthRequest="100" HeightRequest="100" Aspect="AspectFill" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" />
                             <StackLayout Orientation="Vertical">
                                 <Label Text="{Binding ImageDescription}" VerticalTextAlignment="Start" FontSize="Small" />
                                 <Label Text="{Binding Name}" VerticalTextAlignment="Start" FontSize="Micro" />
-
+                                <Button x:Name="btnShare" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="#03DAC6" FontFamily="Rubik" TextColor="#FFF" FontSize="Small" Text="Share" Clicked="btnshare" CommandParameter="{Binding .}"></Button>
 
 
                             </StackLayout>

@@ -105,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="cameraicon.png" />
+    <Content Include="clipboard.png" />
     <Content Include="gallery.png" />
     <Content Include="galleryicon.png" />
     <Content Include="GoogleLogo.png" />
@@ -159,7 +160,7 @@
       <Version>1.43.0</Version>
     </PackageReference>
     <PackageReference Include="Google.Apis.Drive.v3">
-      <Version>1.43.0.1807</Version>
+      <Version>1.43.0.1835</Version>
     </PackageReference>
     <PackageReference Include="WindowsAzure.Storage">
       <Version>9.3.3</Version>
@@ -167,15 +168,21 @@
     <PackageReference Include="Xam.Plugin.Media">
       <Version>4.0.1.5</Version>
     </PackageReference>
+    <PackageReference Include="Xam.Plugins.Forms.ImageCircle">
+      <Version>3.0.0.5</Version>
+    </PackageReference>
+    <PackageReference Include="Xam.Plugins.Settings">
+      <Version>3.1.1</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Auth">
       <Version>1.7.0</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991477" />
+    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991537" />
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.9" />
     <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Xamarin.Forms.Visual.Material">
-      <Version>4.4.0.991477</Version>
+      <Version>4.4.0.991537</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="LFLens.Views.Settings">
+    <ContentPage.Content>
+        <StackLayout>
+            <!--<TableView Intent="Settings">
+                <TableRoot>
+                    <TableSection>
+
+                        <SwitchCell Text="Store History" On="False"  x:Name="storeHistory" Tapped="storeHistory_OnChanged" />
+                        <SwitchCell Text="Share with LFLens" On="False"  x:Name="shareLFLens" Tapped="shareLFLens_OnChanged"></SwitchCell>
+                    </TableSection>
+                </TableRoot>
+            </TableView>-->
+            <Grid HorizontalOptions="FillAndExpand">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300" />
+                   
+                </Grid.ColumnDefinitions>
+                <Label x:Name="lblStoreDetails" HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.Column="0" VerticalTextAlignment="Center"   ></Label>
+                <Switch HorizontalOptions="End" x:Name="StoreDetails" Toggled="StoreDetails_Toggled" Grid.Row="0" Grid.Column="1"  ></Switch>
+
+
+                <Label x:Name="lblShare" HorizontalOptions="FillAndExpand" Grid.Row="1" Grid.Column="0"  HorizontalTextAlignment="Center" WidthRequest="400"></Label>
+                <Switch HorizontalOptions="End" x:Name="ShareLFLens" Toggled="ShareLFLens_Toggled" Grid.Row="1" Grid.Column="1"></Switch>
+              
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

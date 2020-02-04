@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using LFLens.Models;
 using Google.Apis.Drive.v3;
+using LFLens.Helpers;
 
 namespace LFLens.Views
 {
@@ -32,7 +33,7 @@ namespace LFLens.Views
         {
             string clientId = null;
             string redirectUri = null;
-          
+
             switch (Device.RuntimePlatform)
             {
                 case Device.iOS:
@@ -96,57 +97,72 @@ namespace LFLens.Views
                     string userJson = await response.GetResponseTextAsync();
                     user = JsonConvert.DeserializeObject<OAuthUserDetails>(userJson);
                 }
-
+                LFLens.Helpers.Settings.AccessToken = null;
+                LFLens.Helpers.Settings.RefreshToken = null;
+                LFLens.Helpers.Settings.AccessTokenExpirationDate = DateTime.UtcNow;
+                await store.SaveAsync(account = e.Account, OAuthConstants.AppName);
                 if (account != null)
                 {
+
                     //  store.Delete(account, OAuthConstants.AppName);
-                    Application.Current.Properties.Remove("access_token");
-                    Application.Current.Properties.Remove("refresh_token");
-                    Application.Current.Properties.Add("access_token", account.Properties["access_token"]);
-                    Application.Current.Properties.Add("refresh_token", account.Properties["refresh_token"]);
-                    bool isRootFolderExists = GoogleDriveFiles.CheckFolder(OAuthConstants.AppName);
-                    bool isPhotosFolderExists = GoogleDriveFiles.CheckFolder("Photos");
+                    //Application.Current.Properties.Remove("access_token");
+                    //Application.Current.Properties.Remove("refresh_token");
+                    //Application.Current.Properties.Add("access_token", account.Properties["access_token"]);
+                    // Application.Current.Properties.Add("refresh_token", account.Properties["refresh_token"]);
+                    LFLens.Helpers.Settings.AccessToken = account.Properties["access_token"].ToString();
+                    LFLens.Helpers.Settings.RefreshToken = account.Properties["refresh_token"].ToString();
+
+                    LFLens.Helpers.Settings.AccessTokenExpirationDate = DateTime.UtcNow.AddSeconds(Convert.ToDouble(account.Properties["expires_in"].ToString()));
+                    Google.Apis.Drive.v3.DriveService service = GoogleDriveFiles.GetDriveService();
+                    bool isRootFolderExists = GoogleDriveFiles.CheckFolder(OAuthConstants.AppName, service);
+                  //  bool isPhotosFolderExists = GoogleDriveFiles.CheckFolder(OAuthConstants.PhotosFolderName , service);
+                   
                     if (isRootFolderExists == false)
-                    { GoogleDriveFiles.CreateAppFolder(OAuthConstants.AppName); }
+                    { GoogleDriveFiles.CreateAppFolder(OAuthConstants.AppName, service); }
 
-                    if (isPhotosFolderExists == false)
+
+                   
+                    FilesResource.ListRequest listRequest = service.Files.List();
+                    IList<Google.Apis.Drive.v3.Data.File> mfiles = listRequest.Execute().Files;
+                    foreach (var file in mfiles)
                     {
-                        Google.Apis.Drive.v3.DriveService service = GoogleDriveFiles.GetDriveService();
-                        FilesResource.ListRequest listRequest = service.Files.List();
-                        IList<Google.Apis.Drive.v3.Data.File> mfiles = listRequest.Execute().Files;
-                        foreach (var file in mfiles)
+                        if (file.Name == OAuthConstants.AppName)
                         {
-                            if (file.Name == OAuthConstants.AppName)
-                            {
-                                GoogleDriveFiles.CreateFolderInFolder(file.Id);
-                                Application.Current.Properties.Add("RootFolderID", file.Id);
+                            LFLens.Helpers.Settings.RootFolderID = file.Id;
+                                                 
 
-                            }
                         }
+                        if(file.Name == OAuthConstants.PhotosFolderName)
+                        {
+                            LFLens.Helpers.Settings.PhotosFolderID  = file.Id;
+
+                        }
+                       
                     }
 
-
+                    await Navigation.PushAsync(new ItemsPage());
                     //     
                 }
 
-                await store.SaveAsync(account = e.Account, OAuthConstants.AppName);
-                Application.Current.Properties.Remove("Id");
-                Application.Current.Properties.Remove("FirstName");
-                Application.Current.Properties.Remove("LastName");
-                Application.Current.Properties.Remove("DisplayName");
-                Application.Current.Properties.Remove("EmailAddress");
-                Application.Current.Properties.Remove("ProfilePicture");
 
-                Application.Current.Properties.Add("Id", user.Id);
-                Application.Current.Properties.Add("FirstName", user.GivenName);
-                Application.Current.Properties.Add("LastName", user.FamilyName);
-                Application.Current.Properties.Add("DisplayName", user.Name);
-                Application.Current.Properties.Add("EmailAddress", user.Email);
-                Application.Current.Properties.Add("ProfilePicture", user.Picture);
-                await Navigation.PushAsync(new ItemsPage());
+                //Application.Current.Properties.Remove("Id");
+                //Application.Current.Properties.Remove("FirstName");
+                //Application.Current.Properties.Remove("LastName");
+                //Application.Current.Properties.Remove("DisplayName");
+                //Application.Current.Properties.Remove("EmailAddress");
+                //Application.Current.Properties.Remove("ProfilePicture");
+                LFLens.Helpers.Settings.Username = user.Name;
+                LFLens.Helpers.Settings.EmailID = user.Email;
+                //Application.Current.Properties.Add("Id", user.Id);
+                //Application.Current.Properties.Add("FirstName", user.GivenName);
+                //Application.Current.Properties.Add("LastName", user.FamilyName);
+                //Application.Current.Properties.Add("DisplayName", user.Name);
+                //Application.Current.Properties.Add("EmailAddress", user.Email);
+                //Application.Current.Properties.Add("ProfilePicture", user.Picture);
+               
 
             }
-            else { }
+
         }
 
 

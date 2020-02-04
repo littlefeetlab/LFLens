@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
+using ImageCircle.Forms.Plugin.iOS;
 using UIKit;
 
 namespace LFLens.iOS
@@ -20,6 +21,7 @@ namespace LFLens.iOS
         //
         // You have 17 seconds to return from this method, or iOS will terminate your application.
         //
+       
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             // define useragent android like
@@ -29,6 +31,7 @@ namespace LFLens.iOS
             NSDictionary dictionary = NSDictionary.FromObjectAndKey(NSObject.FromObject(userAgent), NSObject.FromObject("UserAgent"));
             NSUserDefaults.StandardUserDefaults.RegisterDefaults(dictionary);
             global::Xamarin.Forms.Forms.Init();
+            ImageCircleRenderer.Init();
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

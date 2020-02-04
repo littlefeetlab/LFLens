@@ -9,6 +9,7 @@ using Xamarin.Forms;
 using System.Linq;
 using System.IO;
 using LFLens.Views;
+using LFLens.Helpers;
 
 namespace LFLens.Models
 {
@@ -26,8 +27,7 @@ namespace LFLens.Models
         public static Google.Apis.Drive.v3.DriveService GetDriveService()
         {
             Google.Apis.Drive.v3.DriveService service = new Google.Apis.Drive.v3.DriveService();
-            if (AuthenticationState.Authenticator != null)
-            {
+           
                 Google.Apis.Auth.OAuth2.Flows.GoogleAuthorizationCodeFlow googleAuthFlow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer()
                 {
                     ClientSecrets = new ClientSecrets()
@@ -39,9 +39,9 @@ namespace LFLens.Models
 
                 Google.Apis.Auth.OAuth2.Responses.TokenResponse responseToken = new TokenResponse()
                 {
-                    AccessToken = Application.Current.Properties["access_token"].ToString(),
+                    AccessToken = LFLens.Helpers.Settings.AccessToken,
 
-                    RefreshToken = Application.Current.Properties["refresh_token"].ToString(),
+                    RefreshToken = LFLens.Helpers.Settings.RefreshToken,
                     Scope = OAuthConstants.GoogleScope,
                     TokenType = "Bearer",
                 };
@@ -59,18 +59,17 @@ namespace LFLens.Models
                 });
                 service.HttpClient.Timeout = TimeSpan.FromMinutes(100);
                
-            }
+           
           //  else { await Navigation.PushModalAsync(new NavigationPage(new OAuth())); }
            
             return service;
 
         }
 
-
-        public static void CreateAppFolder(string FolderName)
+        public static void CreateAppFolder(string FolderName, Google.Apis.Drive.v3.DriveService service )
         {
 
-            Google.Apis.Drive.v3.DriveService service = GetDriveService();
+//            Google.Apis.Drive.v3.DriveService service = GetDriveService();
 
             var FileMetaData = new Google.Apis.Drive.v3.Data.File();
             FileMetaData.MimeType = "application/vnd.google-apps.folder";
@@ -79,14 +78,15 @@ namespace LFLens.Models
             request = service.Files.Create(FileMetaData);
             request.Fields = "id";
             var file = request.Execute();
+            GoogleDriveFiles.CreateFolderInFolder(file.Id, service);
 
         }
 
-        public static bool CheckFolder(string FolderName)
+        public static bool CheckFolder(string FolderName, Google.Apis.Drive.v3.DriveService service)
         {
             bool IsExist = false;
 
-            Google.Apis.Drive.v3.DriveService service = GetDriveService();
+           // Google.Apis.Drive.v3.DriveService service = GetDriveService();
 
             // Define the parameters of the request.    
             Google.Apis.Drive.v3.FilesResource.ListRequest FileListRequest = service.Files.List();
@@ -107,13 +107,13 @@ namespace LFLens.Models
             return IsExist;
         }
 
-        public static void CreateFolderInFolder(string folderId)
+        public static void CreateFolderInFolder(string folderId, Google.Apis.Drive.v3.DriveService service)
         {
-            Google.Apis.Drive.v3.DriveService service = GetDriveService();
+           // Google.Apis.Drive.v3.DriveService service = GetDriveService();
 
             var FileMetaData = new Google.Apis.Drive.v3.Data.File()
             {
-                Name = Path.GetFileName("Photos"),
+                Name = Path.GetFileName(OAuthConstants.PhotosFolderName),
                 MimeType = "application/vnd.google-apps.folder",
                 Parents = new List<string>
                    {
@@ -127,65 +127,13 @@ namespace LFLens.Models
             request = service.Files.Create(FileMetaData);
             request.Fields = "id";
             var file = request.Execute();
-            Application.Current.Properties.Add("PhotosFolderID", file.Id);
-
+            LFLens.Helpers.Settings.PhotosFolderID = file.Id;
+         
             var file1 = request;
 
         }
 
-        public static List<GoogleDriveFiles> GetDriveFiles()
-        {
-            Google.Apis.Drive.v3.DriveService service = GoogleDriveFiles.GetDriveService();
-
-            // Define parameters of request.
-            Google.Apis.Drive.v3.FilesResource.ListRequest FileListRequest = service.Files.List();
-            FileListRequest.Fields = "nextPageToken, files(createdTime, id, name, size, version, trashed, parents)";
-
-            // List files.
-            IList<Google.Apis.Drive.v3.Data.File> files = FileListRequest.Execute().Files;
-            List<GoogleDriveFiles> FileList = new List<GoogleDriveFiles>();
-
-            if (files != null && files.Count > 0)
-            {
-                foreach (var file in files)
-                {
-                    GoogleDriveFiles File = new GoogleDriveFiles
-                    {
-                        Id = file.Id,
-                        Name = file.Name,
-                        Size = file.Size,
-                        Version = file.Version,
-                        CreatedTime = file.CreatedTime,
-                        Parents = file.Parents
-                    };
-                    FileList.Add(File);
-                }
-            }
-            return FileList;
-        }
-
-        public static void DeleteFile(GoogleDriveFiles files)
-        {
-            Google.Apis.Drive.v3.DriveService service = GoogleDriveFiles.GetDriveService();
-            try
-            {
-                // Initial validation.    
-                if (service == null)
-                    throw new ArgumentNullException("service");
-
-                if (files == null)
-                    throw new ArgumentNullException(files.Id);
-
-                // Make the request.    
-                service.Files.Delete(files.Id).Execute();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Request Files.Delete failed.", ex);
-            }
-        }
-
-
+     
 
     }
 }

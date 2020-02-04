@@ -4,6 +4,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using LFLens.Services;
 using LFLens.Views;
+using LFLens.Helpers;
 
 namespace LFLens
 {
@@ -12,19 +13,27 @@ namespace LFLens
         //TODO: Replace with *.azurewebsites.net url after deploying backend to Azure
         //To debug on Android emulators run the web backend against .NET Core not IIS
         //If using other emulators besides stock Google images you may need to adjust the IP address
-        public static string AzureBackendUrl =
-            DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5000" : "http://localhost:5000";
-        public static bool UseMockDataStore = true;
+       // public static string AzureBackendUrl =
+         //   DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5000" : "http://localhost:5000";
+     //   public static bool UseMockDataStore = true;
 
+        [Obsolete]
         public App()
         {
             InitializeComponent();
 
-            if (UseMockDataStore)
-                DependencyService.Register<MockDataStore>();
-            else
-                DependencyService.Register<AzureDataStore>();
-            MainPage = new MainPage();
+            //if (UseMockDataStore)
+            //    DependencyService.Register<MockDataStore>();
+            //else
+            //    DependencyService.Register<AzureDataStore>();
+            
+           if (!string.IsNullOrEmpty(LFLens.Helpers.Settings.AccessToken) && LFLens.Helpers.Settings.AccessTokenExpirationDate < DateTime.UtcNow.AddHours(1) && !string.IsNullOrEmpty(LFLens.Helpers.Settings.RootFolderID) && !string.IsNullOrEmpty(LFLens.Helpers.Settings.PhotosFolderID) ) 
+            {
+              
+                    MainPage = new MainPage();
+               
+            }
+            else { MainPage = new NavigationPage(new OAuth()); }
         }
 
         protected override void OnStart()

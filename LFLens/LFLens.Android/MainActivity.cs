@@ -9,6 +9,7 @@ using Android.OS;
 using Plugin.Permissions;
 using Plugin.CurrentActivity;
 using Android;
+using ImageCircle.Forms.Plugin.Droid;
 
 namespace LFLens.Droid
 {
@@ -33,6 +34,7 @@ namespace LFLens.Droid
            // global::Xamarin.Auth.Presenters.XamarinAndroid.AuthenticationConfiguration.Init(this, savedInstanceState);
             global::Xamarin.Auth.CustomTabsConfiguration.CustomTabsClosingMessage = null;
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            ImageCircleRenderer.Init();
             LoadApplication(new App());
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

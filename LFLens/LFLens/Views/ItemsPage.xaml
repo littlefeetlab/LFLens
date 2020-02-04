@@ -5,40 +5,75 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewmodels="clr-namespace:LFLens.ViewModels"
              mc:Ignorable="d"
+             xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
              x:Class="LFLens.Views.ItemsPage"
              Title="LF Lens" Visual="Material"
+             
              x:Name="BrowseItemsPage">
-   
+
     <ContentPage.ToolbarItems>
-        
-        <ToolbarItem Text="Back" x:Name="tbBack">
-            
-        </ToolbarItem>
+        <ToolbarItem Text="Logout"
+                     Command="{Binding LogoutCommand}"
+                     Clicked="LogoutMenuItem_Clicked"
+                     Priority="1"/>
+
+
+
+
     </ContentPage.ToolbarItems>
-    <ContentPage.BindingContext>
+    <!--<ContentPage.BindingContext>
         <viewmodels:ItemsViewModel />
-    </ContentPage.BindingContext>
+    </ContentPage.BindingContext>-->
 
     <StackLayout BackgroundColor="White">
         <ScrollView>
             <StackLayout >
 
-                <Label x:Name="lblResult"  FontSize="Title" Visual="Material" />
-                <Button x:Name="clipboard" IsVisible="False" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="150" BackgroundColor="WhiteSmoke" Font="" Text="Clipboard"></Button>
-                <Image x:Name="imgChoosen" VerticalOptions="Center" WidthRequest="300" HeightRequest="300" Source="cameraicon.png" />
-                <Button 
+                <StackLayout x:Name="sldefault">
+
+                    <ImageButton 
                 x:Name="btnCapture"
                 Clicked="CaptureBtn_Clicked"
-               Text="Take From Camera" HorizontalOptions="Center"
-                    VerticalOptions="Center" TextColor="#FFF" BackgroundColor="#03DAC6" FontFamily="Rubik" WidthRequest="150" />
+               HorizontalOptions="Center"
+                    VerticalOptions="Center" Source="camera.xml" WidthRequest="100" HeightRequest="150" BackgroundColor="White" />
 
-                <Button
+                    <ImageButton
                 x:Name="btnGallery"
-                Clicked="GalleryBtn_Clicked"  HorizontalOptions="Center" Text="Pick From Gallery"
-                    VerticalOptions="Center" BackgroundColor="#03DAC6" FontFamily="Rubik" TextColor="#FFF" WidthRequest="150" />
-               
+                Clicked="GalleryBtn_Clicked"  HorizontalOptions="Center" Source="gallery.xml" WidthRequest="100" HeightRequest="150" BackgroundColor="White"/>
+                    
+                    <ActivityIndicator x:Name="activityMonitor" IsRunning="{Binding IsBusy}" 
+   VerticalOptions="Center" HorizontalOptions="Center" Color="#6200ee99"  />
+                </StackLayout>
+                
+                
+                <StackLayout IsVisible="False" x:Name="slResult" Padding="20" >
+                    <Frame Padding="0" Margin="0" CornerRadius="20"  IsClippedToBounds="True"  BorderColor="White">
+                        <Image x:Name="imgChoosen" VerticalOptions="CenterAndExpand" Source="cameraicon.png" HorizontalOptions="CenterAndExpand"  />
+                    </Frame>
+                    <!--<controls:CircleImage  Aspect="AspectFill" x:Name="imgChoosen">
+                        <controls:CircleImage.WidthRequest>
+                            <OnPlatform x:TypeArguments="x:Double">
+                                <On Platform="Android, iOS">350</On>
+                                <On Platform="WinPhone">75</On>
+                            </OnPlatform>
+                        </controls:CircleImage.WidthRequest>
+                        <controls:CircleImage.HeightRequest>
+                            <OnPlatform x:TypeArguments="x:Double">
+                                <On Platform="Android, iOS">350</On>
+                                <On Platform="WinPhone">75</On>
+                            </OnPlatform>
+                        </controls:CircleImage.HeightRequest>
+                    </controls:CircleImage>-->
+
+                    <!--<controls:CircleImage  x:Name="imgChoosen" WidthRequest="250" HeightRequest="250" Aspect="AspectFill" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" />-->
+                    <Label x:Name="lblResult" FontSize="Title" Visual="Material" HorizontalOptions="StartAndExpand" />
+                    <!--<ImageButton x:Name="clipboard" VerticalOptions="Center" HorizontalOptions="Center" Source="clipboard.png" Margin="5" ></ImageButton>-->
+                    <!--<Button x:Name="clipboard" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="#03DAC6" FontFamily="Rubik" TextColor="#FFF" WidthRequest="150" Margin="10" Text="ClipBoard" ></Button>-->
+                    <Button x:Name="btnShare" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="#03DAC6" FontFamily="Rubik" TextColor="#FFF" WidthRequest="150" Text="Share"></Button>
+                    <Button x:Name="Back" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="#03DAC6" FontFamily="Rubik" TextColor="#FFF" WidthRequest="150" Text="Clear"></Button>
+                </StackLayout>
             </StackLayout>
         </ScrollView>
     </StackLayout>
-    
+
 </ContentPage>

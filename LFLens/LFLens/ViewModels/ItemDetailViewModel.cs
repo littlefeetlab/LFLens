@@ -10,6 +10,7 @@ namespace LFLens.ViewModels
         public ItemDetailViewModel()
         {
             ImageListItem = new ImageDetails().GetImageAnalyseDetails();
+           
 
         }
     }

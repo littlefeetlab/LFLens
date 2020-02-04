@@ -22,7 +22,7 @@ namespace LFLens.Views
             MasterBehavior = MasterBehavior.Popover;
            
             MenuPages.Add((int)MenuItemType.Home, (NavigationPage)Detail);
-           
+       // https://github.com/HoussemDellai/CheapIdeas/blob/master/CheapIdeas/CheapIdeas/App.xaml.cs
 
         }
         [Obsolete]
@@ -39,7 +39,7 @@ namespace LFLens.Views
                         MenuPages.Add(id, new NavigationPage(new ItemDetailPage()));
                         break;
                     case (int)MenuItemType.Settings :
-                        MenuPages.Add(id, new NavigationPage(new OAuth()));
+                        MenuPages.Add(id, new NavigationPage(new Settings()));
                         break;
                     case (int)MenuItemType.About:
                         MenuPages.Add(id, new NavigationPage(new AboutPage()));

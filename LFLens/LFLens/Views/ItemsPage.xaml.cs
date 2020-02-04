@@ -18,6 +18,8 @@ using Plugin.Media.Abstractions;
 using Xamarin.Essentials;
 using Google.Apis.Drive.v3;
 
+using LFLens.Helpers;
+
 namespace LFLens.Views
 {
     // Learn more about making custom code visible in the Xamarin.Forms previewer
@@ -25,30 +27,36 @@ namespace LFLens.Views
     [DesignTimeVisible(false)]
     public partial class ItemsPage : ContentPage
     {
-        ItemsViewModel viewModel;
-
-        Google.Apis.Drive.v3.DriveService service = GoogleDriveFiles.GetDriveService();
+        // ItemsViewModel viewModel;
 
 
+        public string strDriveFileID = string.Empty;
+        private MediaFile photo;
 
         public ItemsPage()
         {
 
             InitializeComponent();
+            this.activityMonitor.BindingContext = this;
+            this.IsBusy = false;
 
-            BindingContext = viewModel = new ItemsViewModel();
-            tbBack.Clicked += (object sender, System.EventArgs e) =>
+            //   BindingContext = viewModel = new ItemsViewModel();
+            //   Google.Apis.Drive.v3.DriveService service = GoogleDriveFiles.GetDriveService();
+            Back.Clicked += (object sender, System.EventArgs e) =>
             {
-                btnCapture.IsVisible = true;
-                btnGallery.IsVisible = true;
-              //  imgChoosen.IsVisible = false;
-                imgChoosen.Source = Device.RuntimePlatform == Device.Android
-                ? ImageSource.FromFile("cameraicon.jpg")
-                : ImageSource.FromFile("Images/cameraicon.jpg");
-                lblResult.IsVisible = false;
-                clipboard.IsVisible = false;
+                //btnCapture.IsVisible = true;
+                //btnGallery.IsVisible = true;
+                ////  imgChoosen.IsVisible = false;
+                //imgChoosen.Source = Device.RuntimePlatform == Device.Android
+                //? ImageSource.FromFile("cameraicon.jpg")
+                //: ImageSource.FromFile("Images/cameraicon.jpg");
+                slResult.IsVisible = false;
+                sldefault.IsVisible = true;
+                this.IsBusy = false;
                 // Perform action
             };
+
+
 
         }
 
@@ -59,36 +67,39 @@ namespace LFLens.Views
             {
                 //if (AuthenticationState.Authenticator != null)
                 //{
-                    if (!CrossMedia.Current.IsPickPhotoSupported)
-                    {
-                        await DisplayAlert("Photos Not Supported", ":( Permission not granted to photos.", "OK");
-                        return;
-                    }
-                    var photo = await Plugin.Media.CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions
-                    {
-                        PhotoSize = Plugin.Media.Abstractions.PhotoSize.Small,
-                        SaveMetaData = true,
-                        RotateImage = true
-                    });
+                if (!CrossMedia.Current.IsPickPhotoSupported)
+                {
+                    await DisplayAlert("Photos Not Supported", ":( Permission not granted to photos.", "OK");
+                    return;
+                }
+                var photo = await Plugin.Media.CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions
+                {
+                    PhotoSize = Plugin.Media.Abstractions.PhotoSize.Small,
+                    SaveMetaData = true,
+                    RotateImage = true
+                });
 
-                  
-                    if (photo == null)
-                        //{ //imgChoosen.Source = "cameraicon.png"; }
-                        return;
 
-               
+                if (photo == null)
+                    //{ //imgChoosen.Source = "cameraicon.png"; }
+                    return;
+
+
                 var imgSource = ImageSource.FromStream(() => { return photo.GetStream(); });
-                    imgChoosen.Source = imgSource;
-                imgChoosen.IsVisible = true;
+                imgChoosen.Source = imgSource;
+
                 string filepath = photo.Path;
-                btnCapture.IsVisible = false;
-                btnGallery.IsVisible = false;
+                this.IsBusy = true;
+
 
                 string FileName = Path.GetFileName(filepath);
-                    byte[] getByte = GetImageAsByteArray(photo.GetStream());
+                byte[] getByte = GetImageAsByteArray(photo.GetStream());
 
-                    ByteArrayContent content = new ByteArrayContent(getByte);
-                    string PhotosFolderID = Application.Current.Properties["PhotosFolderID"].ToString();
+                ByteArrayContent content = new ByteArrayContent(getByte);
+                if (LFLens.Helpers.Settings.StoreHistory == true)
+                {
+                    Google.Apis.Drive.v3.DriveService service = GoogleDriveFiles.GetDriveService();
+                    string PhotosFolderID = LFLens.Helpers.Settings.PhotosFolderID;
                     var fileMetadata = new Google.Apis.Drive.v3.Data.File()
                     {
                         Name = string.Format("LFLens_{0}.jpg", DateTime.Now.ToString("yyyyMMdd_HHmmss")),
@@ -98,21 +109,21 @@ namespace LFLens.Views
     }
 
                     };
-              //  string FolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures));
+                    //  string FolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures));
 
-                FilesResource.CreateMediaUpload request;
+                    FilesResource.CreateMediaUpload request;
+
 
                     request = service.Files.Create(
-                        fileMetadata, photo.GetStream(), "image/jpeg");
+                            fileMetadata, photo.GetStream(), "image/jpeg");
                     request.Fields = "id";
                     request.Upload();
 
-                    var file = request.ResponseBody;
+                    var driveFile = request.ResponseBody;
+                    strDriveFileID = driveFile.Id;
+                }
+                await MakeAnalysisRequest(content, FileName, filepath, strDriveFileID);
 
-                    await MakeAnalysisRequest(content, fileMetadata.Name.ToString(), filepath);
-
-                //}
-                //else { await Navigation.PushModalAsync(new NavigationPage(new OAuth())); }
             }
             catch (Exception ex)
             {
@@ -129,14 +140,15 @@ namespace LFLens.Views
             {
                 //if (AuthenticationState.Authenticator != null)
                 //{
-                    if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
-                    {
-                        await DisplayAlert("No Camera", ":( No camera available.", "OK");
-                        return;
-                    }
+                if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+                {
+                    await DisplayAlert("No Camera", ":( No camera available.", "OK");
+                    return;
+                }
 
-
-                    var photo = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
+                if (LFLens.Helpers.Settings.StoreHistory == true)
+                {
+                    photo = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
                     {
                         CustomPhotoSize = 50,
                         PhotoSize = PhotoSize.Small,
@@ -148,22 +160,39 @@ namespace LFLens.Views
 
 
                     });
-                    if (photo != null)
+                }
+                else
+                {
+                    photo = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
                     {
-                    btnCapture.IsVisible = false;
-                    btnGallery.IsVisible = false;
-                    imgChoosen.IsVisible = true;
+                        CustomPhotoSize = 50,
+                        PhotoSize = PhotoSize.Small,
+                        AllowCropping = true,
+                       // Directory = OAuthConstants.AppName,
+                        Name = "LFLens_" + DateTime.Now.ToString("yyyyMMdd_HHmmss"),
+                       // SaveToAlbum = true
+
+
+
+                    });
+
+                }
+                if (photo != null)
+                {
+
                     var imgSource = ImageSource.FromStream(() => { return photo.GetStream(); });
-                        imgChoosen.Source = imgSource;
+                    imgChoosen.Source = imgSource;
+                    
+                    string filepath = photo.Path;
+                    this.IsBusy = true;
 
-                        string filepath = photo.Path;
+                    string FileName = Path.GetFileName(filepath);
+                    byte[] getByte = GetImageAsByteArray(photo.GetStream());
 
-
-                        string FileName = Path.GetFileName(filepath);
-                        byte[] getByte = GetImageAsByteArray(photo.GetStream());
-
-                        ByteArrayContent content = new ByteArrayContent(getByte);
-                        string PhotosFolderID = Application.Current.Properties["PhotosFolderID"].ToString();
+                    ByteArrayContent content = new ByteArrayContent(getByte);
+                    if (LFLens.Helpers.Settings.StoreHistory == true)
+                    {
+                        string PhotosFolderID = LFLens.Helpers.Settings.PhotosFolderID;
                         var fileMetadata = new Google.Apis.Drive.v3.Data.File()
                         {
                             Name = FileName,
@@ -177,20 +206,21 @@ namespace LFLens.Views
 
 
                         FilesResource.CreateMediaUpload request;
+                        //using (var stream = new System.IO.FileStream(photo.GetStream(), System.IO.FileMode.Open))
+                        //{
+                        Google.Apis.Drive.v3.DriveService service = GoogleDriveFiles.GetDriveService();
 
                         request = service.Files.Create(
-                                fileMetadata, photo.GetStream(), "image/jpeg");
+                                    fileMetadata, photo.GetStream(), "image/jpeg");
                         request.Fields = "id";
                         request.Upload();
-                        // }
-                        var file = request.ResponseBody;
-
-                        await MakeAnalysisRequest(content, FileName, filepath);
-
+                        var driveFile = request.ResponseBody;
+                        strDriveFileID = driveFile.Id;
                     }
-                  //  else { imgChoosen.Source = "cameraicon.png"; }
-                //}
-                //else { await Navigation.PushModalAsync(new NavigationPage(new OAuth())); }
+                    await MakeAnalysisRequest(content, FileName, filepath, strDriveFileID);
+
+                }
+              
             }
             catch (Exception ex)
             {
@@ -199,7 +229,7 @@ namespace LFLens.Views
             }
         }
 
-       
+
 
         public static byte[] GetImageAsByteArray(Stream Camerafile)
         {
@@ -216,7 +246,9 @@ namespace LFLens.Views
             return bytes;
         }
 
-        public async Task MakeAnalysisRequest(ByteArrayContent content, string FileName, string filepath)
+
+
+        public async Task MakeAnalysisRequest(ByteArrayContent content, string FileName, string filepath, string DriveFileID)
         {
             try
             {
@@ -247,22 +279,13 @@ namespace LFLens.Views
                 var analysesResult = JsonConvert.DeserializeObject<Item>(contentString);
                 var device = DeviceInfo.Model;
                 var iplatform = DeviceInfo.Platform;
-                lblResult.IsVisible = true;
-                lblResult.Text = analysesResult.description.captions[0].text.ToString();
-                clipboard.IsVisible = true;
 
-                clipboard.Clicked += async (sender, args) =>
-                {
-                    _ = Clipboard.SetTextAsync(lblResult.Text);
-                    if (Clipboard.HasText)
-                    {
-                        var text = await Clipboard.GetTextAsync();
-                       await DisplayAlert("Success", "Copied Successfully", "OK");
-                    }
-                };
+                lblResult.Text = analysesResult.description.captions[0].text.ToString();
+
+
                 ImageDetails ImgItemDetails = new ImageDetails();
-                ImgItemDetails.Name = Application.Current.Properties["DisplayName"].ToString();
-                ImgItemDetails.EmailID = Application.Current.Properties["EmailAddress"].ToString();
+                ImgItemDetails.Name = LFLens.Helpers.Settings.Username;
+                ImgItemDetails.EmailID = LFLens.Helpers.Settings.EmailID;
                 ImgItemDetails.MobileModel = device;
                 ImgItemDetails.MobilePlatform = iplatform.ToString();
                 ImgItemDetails.ImageName = FileName;
@@ -271,87 +294,137 @@ namespace LFLens.Views
                 //  categories.FirstOrDefault().name.ToString();
                 ImgItemDetails.ImageDescription = analysesResult.description.captions[0].text.ToString();
                 ImgItemDetails.IsStoreGooglePhotos = true;
-
+                ImgItemDetails.DriveFileID = DriveFileID;
                 ImgItemDetails.PartitionKey = OAuthConstants.AppName;
                 ImgItemDetails.RowKey = Guid.NewGuid().ToString();
                 ImgItemDetails.Timestamp = DateTime.Now;
                 ImgItemDetails.CreatedTime = DateTime.Now.ToLongDateString();
-                //  AzureTableManager TableManagerObj = new AzureTableManager("LFSLens");
-                //   TableManagerObj.InsertEntity<ImageDetails>(ImgItemDetails, true);
-
-                //string Directory=Environment.CurrentDirectory.ToString();
-                //string Dt = FileSystem.AppDataDirectory.ToString();
-                string JSONFileName = string.Format("{0}.txt", DateTime.Now.ToString("yyyyMMdd"));
-                string JSONFilepath = Path.Combine(OAuthConstants.LogFilePath, JSONFileName);
-                string RootFolderID = Application.Current.Properties["RootFolderID"].ToString();
-
-                string json = JsonConvert.SerializeObject(ImgItemDetails, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, Formatting = Formatting.Indented, CheckAdditionalContent = true });
-                var fileMetadata = new Google.Apis.Drive.v3.Data.File()
+                if (LFLens.Helpers.Settings.ShareWithLFLens == true)
                 {
-                    Name = JSONFileName,
-                    Parents = new List<string>()
+                    AzureTableManager TableManagerObj = new AzureTableManager("LFSLens");
+                    TableManagerObj.InsertEntity<ImageDetails>(ImgItemDetails, true);
+                }
+                if (LFLens.Helpers.Settings.StoreHistory == true)
+                {
+                    //string Directory=Environment.CurrentDirectory.ToString();
+                    //string Dt = FileSystem.AppDataDirectory.ToString();
+                    string JSONFileName = string.Format("{0}.txt", DateTime.Now.ToString("yyyyMMdd"));
+                    string JSONFilepath = Path.Combine(OAuthConstants.LogFilePath, JSONFileName);
+                    string RootFolderID = LFLens.Helpers.Settings.RootFolderID;
+
+                    string json = JsonConvert.SerializeObject(ImgItemDetails, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, Formatting = Formatting.Indented, CheckAdditionalContent = true });
+                    var fileMetadata = new Google.Apis.Drive.v3.Data.File()
+                    {
+                        Name = JSONFileName,
+                        Parents = new List<string>()
                     {
                         RootFolderID
-                    }
+                    },
+                        MimeType = "text/plain",
 
 
 
 
-                };
-                //  string gdFileID = string.Empty;
-                string LogFileID=string.Empty;
+                    };
+                    //  string gdFileID = string.Empty;
+                    string LogFileID = string.Empty;
 
-                if (File.Exists(JSONFilepath))
-                {
-                   
-                    Google.Apis.Drive.v3.DriveService service = GoogleDriveFiles.GetDriveService();
-                    var requestFileList = service.Files.List();
-                    requestFileList.Spaces = "drive";
-                    requestFileList.Fields = "nextPageToken, files(id, name)";
-                    requestFileList.PageSize = 10;
-                    var result = requestFileList.Execute();
-                    foreach (var file in result.Files)
-                    {
-                       // Console.WriteLine(String.Format(
-                         //   "Found file: {0} ({1})", file.Name, file.Id));
-                        if (file.Name == JSONFileName)
-                        {
-                            service.Files.Delete(file.Id).Execute();
+                    //if (File.Exists(JSONFilepath))
+                    //{
 
 
-                        }
-                    }
+                    //   service.Files.Delete(Settings.LogFileID).Execute();
+
+
+                    //}
+
                     if (!(File.Exists(JSONFilepath)))
-                {
-                    File.CreateText(JSONFilepath).Dispose();
-                    File.AppendAllText(JSONFilepath, json);
-
-                   
-
-                }
-                else
-                {
-
-                    json = string.Format(",{0}", json);
-                }
-               
-                File.AppendAllText(JSONFilepath, json);
-                    Google.Apis.Drive.v3.FilesResource.CreateMediaUpload request;
-                    using (var stream = new System.IO.FileStream(JSONFilepath, System.IO.FileMode.Open))
                     {
-                        request = service.Files.Create(fileMetadata, stream, fileMetadata.MimeType);
+                        File.CreateText(JSONFilepath).Dispose();
+                        File.AppendAllText(JSONFilepath, json);
+
+                    }
+                    else
+                    {
+
+                        json = string.Format(",{0}", json);
+                        File.AppendAllText(JSONFilepath, json);
+                        //if (Settings.LogFileID == null)
+                        //{
+                        Google.Apis.Drive.v3.DriveService service = GoogleDriveFiles.GetDriveService();
+                        FilesResource.ListRequest listRequest = service.Files.List();
+                        IList<Google.Apis.Drive.v3.Data.File> mfiles = listRequest.Execute().Files;
+                        foreach (var logfile in mfiles)
+                        {
+                            if (logfile.Name == JSONFileName)
+                            {
+                                service.Files.Delete(logfile.Id).Execute();
+
+                            }
+                        }
+                        // }
+
+
+                    }
+
+                    Google.Apis.Drive.v3.DriveService service1 = GoogleDriveFiles.GetDriveService();
+                    FilesResource.CreateMediaUpload request;
+                    using (var stream = new FileStream(JSONFilepath, System.IO.FileMode.Open))
+                    {
+                        request = service1.Files.Create(fileMetadata, stream, fileMetadata.MimeType);
                         request.Fields = "id";
                         request.Upload();
                     }
-                    var file1 = request.ResponseBody;
-                   
+                    var file = request.ResponseBody;
+                    btnShare.Clicked += async (sender, args) =>
+                    {
+                        await Xamarin.Essentials.Share.RequestAsync(new ShareTextRequest
+                        {
+                            Title = "Share from LFLens",
+                            Text = ImgItemDetails.ImageDescription,
+                            Subject = "LFLens",
+                            Uri = string.Format("{0} File Sharing URL: https://drive.google.com/file/d/{1}/", Environment.NewLine, DriveFileID)
+                        });
+                    };
                 }
+                btnShare.Clicked += async (sender, args) =>
+                {
+                    await Xamarin.Essentials.Share.RequestAsync(new ShareTextRequest
+                    {
+                        Title = "Share from LFLens",
+                        Text = ImgItemDetails.ImageDescription,
+                        Subject = "LFLens",
+                     
+                    });
+                };
+                //Google.Apis.Drive.v3.FilesResource.CreateRequest request;
+
+                //request = service.Files.Create(fileMetadata);
+                //request.Fields = "id";
+                //var file = request.Execute();
+                // Settings.LogFileID  = file.Id;
+
+                // await DisplayAlert(null, file.Id, "ok");
+                //  Settings.LogFileID = file1.Id;
+                // Back.IsVisible = true;
+                sldefault.IsVisible = false;
+                slResult.IsVisible = true;
+
 
             }
             catch (Exception e)
             {
                 Console.WriteLine("\n" + e.Message);
             }
+        }
+
+        [Obsolete]
+        private async void LogoutMenuItem_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new OAuth());
+            LFLens.Helpers.Settings.AccessToken = null;
+            LFLens.Helpers.Settings.AccessTokenExpirationDate = DateTime.UtcNow;
+
         }
 
     }

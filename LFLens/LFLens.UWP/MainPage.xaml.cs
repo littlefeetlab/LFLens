@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImageCircle.Forms.Plugin.UWP;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,11 +18,13 @@ namespace LFLens.UWP
 {
     public sealed partial class MainPage
     {
+        [Obsolete]
         public MainPage()
         {
             this.InitializeComponent();
 
             LoadApplication(new LFLens.App());
+            ImageCircleRenderer.Init();
         }
     }
 }

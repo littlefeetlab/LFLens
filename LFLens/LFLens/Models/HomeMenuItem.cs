@@ -11,6 +11,7 @@ namespace LFLens.Models
         ListofPhotos,
         Settings,
         About
+       
     }
     public class HomeMenuItem
     {
