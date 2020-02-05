@@ -38,7 +38,7 @@
                     <Label.FormattedText>
                         <FormattedString>
                             <FormattedString.Spans>
-                                <Span Text="AppName" FontAttributes="Bold" FontSize="22" />
+                                <Span Text="LFLens" FontAttributes="Bold" FontSize="22" />
                                 <Span Text=" " />
                                 <Span Text="1.0" ForegroundColor="{StaticResource LightTextColor}" />
                             </FormattedString.Spans>
@@ -49,10 +49,10 @@
                     <Label.FormattedText>
                         <FormattedString>
                             <FormattedString.Spans>
-                                <Span Text="This app is written in C# and native APIs using the" />
-                                <Span Text=" " />
+                                <Span Text="LF Lens is a free app that describes as text what's seen in a picture. You can take a picture from the camera or import from the device gallery. The picture and the description can be shared through Google Drive. You can save the pictures and the description to Google Drive for archival." />
+                                <!--<Span Text=" " />
                                 <Span Text="Xamarin Platform" FontAttributes="Bold" />
-                                <Span Text="." />
+                                <Span Text="." />-->
                             </FormattedString.Spans>
                         </FormattedString>
                     </Label.FormattedText>
@@ -61,19 +61,34 @@
                     <Label.FormattedText>
                         <FormattedString>
                             <FormattedString.Spans>
-                                <Span Text="It shares code with its" />
-                                <Span Text=" " />
-                                <Span Text="iOS, Android, and Windows" FontAttributes="Bold" />
-                                <Span Text=" " />
-                                <Span Text="versions." />
+                                <Span Text="The app has NO third-party trackers and shares no data with third-parties. It uses Microsoft Azure Cognitive services for identifying the objects in the pictures taken. LF Lens is built on Microsoft Xamarin Framework, and is made available as open-source at " />
+                                <Span Text="github.com/littlefeetlab"
+                  TextColor="Blue">
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenWebCommand}"
+                                          CommandParameter="github.com/littlefeetlab" />
+                                    </Span.GestureRecognizers>
+                                </Span>
+                                <Span Text="." />
+                            </FormattedString.Spans>
+                            
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <FormattedString.Spans>
+                                <Span Text="LF Lens is happily made in India by Little Feet Services Pvt Ltd, Chennai." />
+                               
                             </FormattedString.Spans>
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
-                <Button Margin="0,10,0,0" Text="Learn more"
+                <!--<Button Margin="0,10,0,0" Text="Learn more"
                         Command="{Binding OpenWebCommand}"
                         BackgroundColor="{StaticResource Primary}"
-                        TextColor="White" />
+                        TextColor="White" />-->
             </StackLayout>
         </ScrollView>
     </Grid>

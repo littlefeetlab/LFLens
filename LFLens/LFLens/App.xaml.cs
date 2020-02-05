@@ -32,6 +32,7 @@ namespace LFLens
               
                     MainPage = new MainPage();
                
+               
             }
             else { MainPage = new NavigationPage(new OAuth()); }
         }

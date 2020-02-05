@@ -10,7 +10,7 @@
 
     <StackLayout Spacing="20" Padding="15">
         <ListView x:Name="lvImage" Header="{Binding .}" ItemsSource="{Binding ImageListItem}" HasUnevenRows="True" SeparatorVisibility="None" IsPullToRefreshEnabled="true"
-          RefreshControlColor="Red" IsRefreshing="True">
+          RefreshControlColor="Red">
             <ListView.HeaderTemplate>
                 <DataTemplate>
                     <ContentView>
@@ -45,7 +45,8 @@
                             <StackLayout Orientation="Vertical">
                                 <Label Text="{Binding ImageDescription}" VerticalTextAlignment="Start" FontSize="Small" />
                                 <Label Text="{Binding Name}" VerticalTextAlignment="Start" FontSize="Micro" />
-                                <Button x:Name="btnShare" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="#03DAC6" FontFamily="Rubik" TextColor="#FFF" FontSize="Small" Text="Share" Clicked="btnshare" CommandParameter="{Binding .}"></Button>
+                                <Button x:Name="btnShare" VerticalOptions="Start"  HorizontalOptions="Start" BackgroundColor="#03DAC6" FontFamily="Rubik" TextColor="#FFF" FontSize="Micro" Text="Share" Clicked="btnshare" CommandParameter="{Binding .}" WidthRequest="60" HeightRequest="35" ></Button>
+                              
 
 
                             </StackLayout>

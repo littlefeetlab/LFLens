@@ -19,16 +19,37 @@ namespace LFLens.Views
         public MenuPage()
         {
             InitializeComponent();
-
-            menuItems = new List<HomeMenuItem>
+            bool isStoreHistory = LFLens.Helpers.Settings.StoreHistory;
+            lblUserName.Text = string.Format("Welcome {0} ,", LFLens.Helpers.Settings.Username);
+            string strProfileURL = LFLens.Helpers.Settings.UserProfileURL;
+            if (!string.IsNullOrEmpty(strProfileURL))
             {
-
+                UserProfile.Source = strProfileURL;
+            }
+            else { UserProfile.IsVisible = false; }
+            if (isStoreHistory == true)
+            {
+                menuItems = new List<HomeMenuItem>
+            {
+               
                 new HomeMenuItem {Id = MenuItemType.Home, Title="Home" },
                 new HomeMenuItem {Id = MenuItemType.ListofPhotos, Title="List of Photos" },
                 new HomeMenuItem {Id = MenuItemType.Settings, Title="Settings" },
                 new HomeMenuItem {Id = MenuItemType.About, Title="About"}
             };
 
+            }
+            else 
+            {
+                menuItems = new List<HomeMenuItem>
+            {
+                
+                new HomeMenuItem {Id = MenuItemType.Home, Title="Home" },
+               // new HomeMenuItem {Id = MenuItemType.ListofPhotos, Title="List of Photos" },
+                new HomeMenuItem {Id = MenuItemType.Settings, Title="Settings" },
+                new HomeMenuItem {Id = MenuItemType.About, Title="About"}
+            };
+            }
             ListViewMenu.ItemsSource = menuItems;
 
             ListViewMenu.SelectedItem = menuItems[0];

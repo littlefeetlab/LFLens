@@ -35,9 +35,13 @@ namespace LFLens.Views
                     case (int)MenuItemType.Home:
                         MenuPages.Add(id, new NavigationPage(new ItemsPage()));
                         break;
+                      
                     case (int)MenuItemType.ListofPhotos:
-                        MenuPages.Add(id, new NavigationPage(new ItemDetailPage()));
+                      
+                            MenuPages.Add(id, new NavigationPage(new ItemDetailPage()));
+                        
                         break;
+                
                     case (int)MenuItemType.Settings :
                         MenuPages.Add(id, new NavigationPage(new Settings()));
                         break;

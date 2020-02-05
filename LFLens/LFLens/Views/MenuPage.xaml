@@ -5,17 +5,24 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="LFLens.Views.MenuPage"
+             xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
              Title="Menu">
              
     <StackLayout VerticalOptions="FillAndExpand">
+        <StackLayout Padding="20" >
+            <controls:CircleImage  WidthRequest="100" HeightRequest="100" Aspect="AspectFill"  HorizontalOptions="CenterAndExpand" x:Name="UserProfile"  />
+            <Label x:Name="lblUserName" FontSize="Small" TextType="Html" ></Label>
+        </StackLayout>
         <ListView x:Name="ListViewMenu"
                     HasUnevenRows="True">
             <d:ListView.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
+                   
                     <x:String>Item 1</x:String>
                     <x:String>Item 2</x:String>
                     <x:String>Item 3</x:String>
                     <x:String>Item 4</x:String>
+                   
                 </x:Array>
             </d:ListView.ItemsSource>
             <ListView.ItemTemplate>

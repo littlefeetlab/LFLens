@@ -153,13 +153,14 @@ namespace LFLens.Views
                 //Application.Current.Properties.Remove("ProfilePicture");
                 LFLens.Helpers.Settings.Username = user.Name;
                 LFLens.Helpers.Settings.EmailID = user.Email;
+                LFLens.Helpers.Settings.UserProfileURL = user.Picture;
                 //Application.Current.Properties.Add("Id", user.Id);
                 //Application.Current.Properties.Add("FirstName", user.GivenName);
                 //Application.Current.Properties.Add("LastName", user.FamilyName);
                 //Application.Current.Properties.Add("DisplayName", user.Name);
                 //Application.Current.Properties.Add("EmailAddress", user.Email);
                 //Application.Current.Properties.Add("ProfilePicture", user.Picture);
-               
+
 
             }
 

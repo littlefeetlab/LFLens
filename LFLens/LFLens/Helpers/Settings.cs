@@ -58,6 +58,18 @@ namespace LFLens.Helpers
                 AppSettings.AddOrUpdateValue("EmailID", value);
             }
         }
+
+        public static string UserProfileURL
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault("UserProfileURL", "");
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue("UserProfileURL", value);
+            }
+        }
         public static string AccessToken
         {
             get

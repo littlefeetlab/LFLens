@@ -4,9 +4,9 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="LFLens.Views.Settings">
+             x:Class="LFLens.Views.Settings" Title="Settings">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Padding="20">
             <!--<TableView Intent="Settings">
                 <TableRoot>
                     <TableSection>
@@ -18,17 +18,18 @@
             </TableView>-->
             <Grid HorizontalOptions="FillAndExpand">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="100"/>
+
+                    <RowDefinition Height="70"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="300" />
+                    <ColumnDefinition Width="250" />
                    
                 </Grid.ColumnDefinitions>
-                <Label x:Name="lblStoreDetails" HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.Column="0" VerticalTextAlignment="Center"   ></Label>
+                <Label x:Name="lblStoreDetails" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="0" VerticalTextAlignment="Center"  Text="Store History in your Google drive and local"></Label>
                 <Switch HorizontalOptions="End" x:Name="StoreDetails" Toggled="StoreDetails_Toggled" Grid.Row="0" Grid.Column="1"  ></Switch>
 
 
-                <Label x:Name="lblShare" HorizontalOptions="FillAndExpand" Grid.Row="1" Grid.Column="0"  HorizontalTextAlignment="Center" WidthRequest="400"></Label>
+                <Label x:Name="lblShare" HorizontalOptions="FillAndExpand" Grid.Row="1" Grid.Column="0"  HorizontalTextAlignment="Start" Text=" &lt;b&gt;Share text to App Developer: &lt;/b&gt; &lt;br/&gt;(Only the description, Pictures are private)" TextType="Html"></Label>
                 <Switch HorizontalOptions="End" x:Name="ShareLFLens" Toggled="ShareLFLens_Toggled" Grid.Row="1" Grid.Column="1"></Switch>
               
             </Grid>
