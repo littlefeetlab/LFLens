@@ -109,6 +109,7 @@
     <Content Include="gallery.png" />
     <Content Include="galleryicon.png" />
     <Content Include="GoogleLogo.png" />
+    <Content Include="littlefeet_logo.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LargeTile.scale-100.png" />
     <Content Include="Assets\LargeTile.scale-200.png" />

@@ -286,7 +286,7 @@ namespace LFLens.Views
                 ImgItemDetails.CreatedTime = DateTime.Now.ToLongDateString();
                 if (LFLens.Helpers.Settings.ShareWithLFLens == true)
                 {
-                    AzureTableManager TableManagerObj = new AzureTableManager("LFSLens");
+                    AzureTableManager TableManagerObj = new AzureTableManager("LFLens");
                     TableManagerObj.InsertEntity<ImageDetails>(ImgItemDetails, true);
                 }
                 if (LFLens.Helpers.Settings.StoreHistory == true)

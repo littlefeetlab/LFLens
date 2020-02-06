@@ -185,4 +185,7 @@
   <ItemGroup>
     <BundleResource Include="Resources\clipboard.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\littlefeet_logo.png" />
+  </ItemGroup>
 </Project>
