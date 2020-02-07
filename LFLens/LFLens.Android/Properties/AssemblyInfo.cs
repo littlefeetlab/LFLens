@@ -7,11 +7,11 @@ using Android.App;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("LFLens.Android")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("LF Lens is a free app that describes as text what’s seen in a picture. You can take a picture from the camera or import from the device gallery. The picture and the description can be shared through Google Drive. You can save the pictures and the description to Google Drive for archival. The app has NO third-party trackers and shares no data with third-parties. It uses Microsoft Azure Cognitive services for identifying the objects in the pictures taken. LF Lens is built on Microsoft Xamarin Framework, and is made available as open-source at github.com/littlefeetlab.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Little Feet Services Pvt Ltd")]
 [assembly: AssemblyProduct("LFLens.Android")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyCopyright("© Copyright Little Feet Services Pvt Ltd")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
@@ -28,6 +28,7 @@ using Android.App;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: Application(Icon = "@drawable/littlefeet_logo")]
 
 // Add some common permissions, these can be removed if not needed
 [assembly: UsesPermission(Android.Manifest.Permission.Internet)]

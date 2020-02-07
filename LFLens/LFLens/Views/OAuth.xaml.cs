@@ -113,31 +113,34 @@ namespace LFLens.Views
                     LFLens.Helpers.Settings.RefreshToken = account.Properties["refresh_token"].ToString();
 
                     LFLens.Helpers.Settings.AccessTokenExpirationDate = DateTime.UtcNow.AddSeconds(Convert.ToDouble(account.Properties["expires_in"].ToString()));
-                    Google.Apis.Drive.v3.DriveService service = GoogleDriveFiles.GetDriveService();
-                    bool isRootFolderExists = GoogleDriveFiles.CheckFolder(OAuthConstants.AppName, service);
-                  //  bool isPhotosFolderExists = GoogleDriveFiles.CheckFolder(OAuthConstants.PhotosFolderName , service);
-                   
-                    if (isRootFolderExists == false)
-                    { GoogleDriveFiles.CreateAppFolder(OAuthConstants.AppName, service); }
-
-
-                   
-                    FilesResource.ListRequest listRequest = service.Files.List();
-                    IList<Google.Apis.Drive.v3.Data.File> mfiles = listRequest.Execute().Files;
-                    foreach (var file in mfiles)
+                    if (LFLens.Helpers.Settings.StoreHistory == true)
                     {
-                        if (file.Name == OAuthConstants.AppName)
+                        Google.Apis.Drive.v3.DriveService service = GoogleDriveFiles.GetDriveService();
+                        bool isRootFolderExists = GoogleDriveFiles.CheckFolder(OAuthConstants.AppName, service);
+                        //  bool isPhotosFolderExists = GoogleDriveFiles.CheckFolder(OAuthConstants.PhotosFolderName , service);
+
+                        if (isRootFolderExists == false)
+                        { GoogleDriveFiles.CreateAppFolder(OAuthConstants.AppName, service); }
+
+
+
+                        FilesResource.ListRequest listRequest = service.Files.List();
+                        IList<Google.Apis.Drive.v3.Data.File> mfiles = listRequest.Execute().Files;
+                        foreach (var file in mfiles)
                         {
-                            LFLens.Helpers.Settings.RootFolderID = file.Id;
-                                                 
+                            if (file.Name == OAuthConstants.AppName)
+                            {
+                                LFLens.Helpers.Settings.RootFolderID = file.Id;
+
+
+                            }
+                            if (file.Name == OAuthConstants.PhotosFolderName)
+                            {
+                                LFLens.Helpers.Settings.PhotosFolderID = file.Id;
+
+                            }
 
                         }
-                        if(file.Name == OAuthConstants.PhotosFolderName)
-                        {
-                            LFLens.Helpers.Settings.PhotosFolderID  = file.Id;
-
-                        }
-                       
                     }
 
                     await Navigation.PushAsync(new ItemsPage());
