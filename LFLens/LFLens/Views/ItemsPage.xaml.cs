@@ -91,6 +91,15 @@ namespace LFLens.Views
                 if (LFLens.Helpers.Settings.StoreHistory == true)
                 {
                     Google.Apis.Drive.v3.DriveService service = GoogleDriveFiles.GetDriveService();
+
+                   
+                       
+
+                    if (string.IsNullOrEmpty(LFLens.Helpers.Settings.RootFolderID) && string.IsNullOrEmpty(LFLens.Helpers.Settings.PhotosFolderID))
+                    {
+                        CreateAppFolder();
+                    }
+
                     string PhotosFolderID = LFLens.Helpers.Settings.PhotosFolderID;
                     var fileMetadata = new Google.Apis.Drive.v3.Data.File()
                     {
@@ -120,6 +129,35 @@ namespace LFLens.Views
             {
                 string test = ex.Message;
                 await DisplayAlert(null, ex.Message, "OK");
+            }
+        }
+
+        private void CreateAppFolder()
+        {
+            Google.Apis.Drive.v3.DriveService service = GoogleDriveFiles.GetDriveService();
+            bool isRootFolderExists = GoogleDriveFiles.CheckFolder(OAuthConstants.AppName, service);
+            if (isRootFolderExists == false)
+            { GoogleDriveFiles.CreateAppFolder(OAuthConstants.AppName, service); }
+
+
+
+            FilesResource.ListRequest listRequest = service.Files.List();
+            IList<Google.Apis.Drive.v3.Data.File> mfiles = listRequest.Execute().Files;
+            foreach (var file in mfiles)
+            {
+                if (file.Name == OAuthConstants.AppName)
+                {
+                    LFLens.Helpers.Settings.RootFolderID = file.Id;
+
+
+                }
+                if (file.Name == OAuthConstants.PhotosFolderName)
+                {
+                    LFLens.Helpers.Settings.PhotosFolderID = file.Id;
+
+                }
+
+
             }
         }
 
@@ -179,6 +217,10 @@ namespace LFLens.Views
                     ByteArrayContent content = new ByteArrayContent(getByte);
                     if (LFLens.Helpers.Settings.StoreHistory == true)
                     {
+                        if (string.IsNullOrEmpty(LFLens.Helpers.Settings.RootFolderID) && string.IsNullOrEmpty(LFLens.Helpers.Settings.PhotosFolderID))
+                        {
+                            CreateAppFolder();
+                        }
                         string PhotosFolderID = LFLens.Helpers.Settings.PhotosFolderID;
                         var fileMetadata = new Google.Apis.Drive.v3.Data.File()
                         {

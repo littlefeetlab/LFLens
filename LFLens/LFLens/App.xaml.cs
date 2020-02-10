@@ -27,7 +27,7 @@ namespace LFLens
             //else
             //    DependencyService.Register<AzureDataStore>();
             
-           if (!string.IsNullOrEmpty(LFLens.Helpers.Settings.AccessToken) && LFLens.Helpers.Settings.AccessTokenExpirationDate < DateTime.UtcNow.AddHours(1) && !string.IsNullOrEmpty(LFLens.Helpers.Settings.RootFolderID) && !string.IsNullOrEmpty(LFLens.Helpers.Settings.PhotosFolderID) ) 
+           if (!string.IsNullOrEmpty(LFLens.Helpers.Settings.AccessToken) && LFLens.Helpers.Settings.AccessTokenExpirationDate < DateTime.UtcNow.AddHours(1)) 
             {
               
                     MainPage = new MainPage();

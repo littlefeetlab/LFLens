@@ -117,9 +117,6 @@
     <BundleResource Include="Resources\tab_feed.png" />
     <BundleResource Include="Resources\tab_feed%402x.png" />
     <BundleResource Include="Resources\tab_feed%403x.png" />
-    <BundleResource Include="Resources\xamarin_logo.png" />
-    <BundleResource Include="Resources\xamarin_logo%402x.png" />
-    <BundleResource Include="Resources\xamarin_logo%403x.png" />
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
   </ItemGroup>
   <ItemGroup>
@@ -171,19 +168,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\cameraicon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\GoogleLogo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\galleryicon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\gallery.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\clipboard.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\littlefeet_logo.png" />

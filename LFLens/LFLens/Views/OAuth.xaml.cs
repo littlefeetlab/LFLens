@@ -104,65 +104,22 @@ namespace LFLens.Views
                 if (account != null)
                 {
 
-                    //  store.Delete(account, OAuthConstants.AppName);
-                    //Application.Current.Properties.Remove("access_token");
-                    //Application.Current.Properties.Remove("refresh_token");
-                    //Application.Current.Properties.Add("access_token", account.Properties["access_token"]);
-                    // Application.Current.Properties.Add("refresh_token", account.Properties["refresh_token"]);
+                   
                     LFLens.Helpers.Settings.AccessToken = account.Properties["access_token"].ToString();
                     LFLens.Helpers.Settings.RefreshToken = account.Properties["refresh_token"].ToString();
 
                     LFLens.Helpers.Settings.AccessTokenExpirationDate = DateTime.UtcNow.AddSeconds(Convert.ToDouble(account.Properties["expires_in"].ToString()));
-                    if (LFLens.Helpers.Settings.StoreHistory == true)
-                    {
-                        Google.Apis.Drive.v3.DriveService service = GoogleDriveFiles.GetDriveService();
-                        bool isRootFolderExists = GoogleDriveFiles.CheckFolder(OAuthConstants.AppName, service);
-                        //  bool isPhotosFolderExists = GoogleDriveFiles.CheckFolder(OAuthConstants.PhotosFolderName , service);
-
-                        if (isRootFolderExists == false)
-                        { GoogleDriveFiles.CreateAppFolder(OAuthConstants.AppName, service); }
-
-
-
-                        FilesResource.ListRequest listRequest = service.Files.List();
-                        IList<Google.Apis.Drive.v3.Data.File> mfiles = listRequest.Execute().Files;
-                        foreach (var file in mfiles)
-                        {
-                            if (file.Name == OAuthConstants.AppName)
-                            {
-                                LFLens.Helpers.Settings.RootFolderID = file.Id;
-
-
-                            }
-                            if (file.Name == OAuthConstants.PhotosFolderName)
-                            {
-                                LFLens.Helpers.Settings.PhotosFolderID = file.Id;
-
-                            }
-
-                        }
-                    }
-
+                   
                     await Navigation.PushAsync(new ItemsPage());
                     //     
                 }
 
 
-                //Application.Current.Properties.Remove("Id");
-                //Application.Current.Properties.Remove("FirstName");
-                //Application.Current.Properties.Remove("LastName");
-                //Application.Current.Properties.Remove("DisplayName");
-                //Application.Current.Properties.Remove("EmailAddress");
-                //Application.Current.Properties.Remove("ProfilePicture");
+              
                 LFLens.Helpers.Settings.Username = user.Name;
                 LFLens.Helpers.Settings.EmailID = user.Email;
                 LFLens.Helpers.Settings.UserProfileURL = user.Picture;
-                //Application.Current.Properties.Add("Id", user.Id);
-                //Application.Current.Properties.Add("FirstName", user.GivenName);
-                //Application.Current.Properties.Add("LastName", user.FamilyName);
-                //Application.Current.Properties.Add("DisplayName", user.Name);
-                //Application.Current.Properties.Add("EmailAddress", user.Email);
-                //Application.Current.Properties.Add("ProfilePicture", user.Picture);
+                
 
 
             }
