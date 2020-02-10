@@ -22,7 +22,6 @@ You can share the details to your friends via. Mail, Clipboard, Whatsapp, Messag
 <br/>
 <b>List of Photos:</b><br/>
 If the user enabled to save the history in the settings page. We are listing the photos saved in the history.
-
 <br/><br/>
 <img src="https://github.com/littlefeetlab/LFLens/blob/master/Screenshots/ListofPhotos.png?raw=true" width="45%" height="25%"/>
 <br/><br/>
