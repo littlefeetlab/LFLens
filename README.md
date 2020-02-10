@@ -21,12 +21,14 @@ You can share the details to your friends via. Mail, Clipboard, Whatsapp, Messag
 <img src="https://github.com/littlefeetlab/LFLens/blob/master/Screenshots/PhotoDescription.png?raw=true" width="45%" height="25%"/>
 <br/>
 <b>List of Photos:</b><br/>
-If the user enabled to save the history in the settings page.The picture and the description can be shared through Google Drive. We are displaying the list of photos save in the history.
+If the user enabled to save the history in the settings page. We are listing the photos saved in the history.
 
 <br/><br/>
 <img src="https://github.com/littlefeetlab/LFLens/blob/master/Screenshots/ListofPhotos.png?raw=true" width="45%" height="25%"/>
 <br/><br/>
-<b>Settings:</b>
+<b>Settings:</b><br/>
+Save History : The picture and the description can be shared through Google Drive.
+Share With LFLens : We will save your photo description in our database.
 <br/><br/>
 
 <img src="https://github.com/littlefeetlab/LFLens/blob/master/Screenshots/Settings.png?raw=true" width="45%" height="25%"/>
