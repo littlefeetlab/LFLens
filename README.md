@@ -11,7 +11,7 @@ The following are the screenshot of the app.
 <b>Home Page:</b>
 You can take a picture from the camera or import from the device gallery to get the result of the photo using cognitive services. 
 
-<img src="https://github.com/littlefeetlab/LFLens/blob/master/Screenshots/Home.png?raw=true"/>
+<img src="https://github.com/littlefeetlab/LFLens/blob/master/Screenshots/Home.png?raw=true" width="25%" height="25%"/>
 
 <b>Result of the Photo:</b>
 
