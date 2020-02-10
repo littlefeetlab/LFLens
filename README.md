@@ -8,6 +8,16 @@ We have developed this application using Visual Studio - Xamarin forms. Currentl
 
 The following are the details of this app.
 
+<b>Plugins used:</b><br/>
+Xamarin.Auth - Enable Google OAuth. <br/>
+Xam:Plugins:Media - To Capture/Pick a photo. <br/>
+Google.Apis.Drive.V3 - Store your history.<br/>
+Google.Apis.Auth - Allow authentication of your google drive.<br/>
+Xam.Plugins.Settings - For settings page.<br/>
+WindowsAzure.Storage - Used to share the details in Azure storage Tables.<br/>
+Xamarin.Forms.Visual.Material - To use Material UI for the app.<br/>
+Xam.Plugins.Forms.ImageCircle - Use to display the image in circle.<br/><br/>
+
 <b>Home Page:</b><br/>
 You can take a picture from the camera or import from the device gallery to get the result of the photo using cognitive services. 
 <br/><br/>
