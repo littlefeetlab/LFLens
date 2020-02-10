@@ -27,7 +27,7 @@ If the user enabled to save the history in the settings page. We are listing the
 <img src="https://github.com/littlefeetlab/LFLens/blob/master/Screenshots/ListofPhotos.png?raw=true" width="45%" height="25%"/>
 <br/><br/>
 <b>Settings:</b><br/>
-Save History : The picture and the description can be shared through Google Drive.
+Save History : The picture and the description can be shared through Google Drive.<br/>
 Share With LFLens : We will save your photo description in our database.
 <br/><br/>
 
