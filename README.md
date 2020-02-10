@@ -8,16 +8,16 @@ We have developed this application using Visual Studio - Xamarin forms. Currentl
 
 The following are the screenshot of the app.
 
-<b>Home Page:</b>
+<b>Home Page:</b><br/>
 You can take a picture from the camera or import from the device gallery to get the result of the photo using cognitive services. 
 
-<img src="https://github.com/littlefeetlab/LFLens/blob/master/Screenshots/Home.png?raw=true" width="25%" height="25%"/>
+<img src="https://github.com/littlefeetlab/LFLens/blob/master/Screenshots/Home.png?raw=true" width="45%" height="25%"/>
 
 <b>Result of the Photo:</b>
 
-<img src="https://github.com/littlefeetlab/LFLens/blob/master/Screenshots/PhotoDescription.png?raw=true"/>
+<img src="https://github.com/littlefeetlab/LFLens/blob/master/Screenshots/PhotoDescription.png?raw=true" width="45%" height="25%"/>
 
-<b>List of Photos:</b>
+<b>List of Photos:</b><br/>
 If the user enabled to save the history in the settings page.The picture and the description can be shared through Google Drive.
 
 <img src="https://github.com/littlefeetlab/LFLens/blob/master/Screenshots/ListofPhotos.png?raw=true"/>
