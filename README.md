@@ -25,7 +25,7 @@ If the user enabled to save the history in the settings page.The picture and the
 
 <br/><br/>
 <img src="https://github.com/littlefeetlab/LFLens/blob/master/Screenshots/ListofPhotos.png?raw=true" width="45%" height="25%"/>
-<br/>
+<br/><br/>
 <b>Settings:</b>
 <br/><br/>
 
