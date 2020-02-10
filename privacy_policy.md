@@ -3,7 +3,7 @@
                     Little Feet Service Pvt Ltd built the LFLens app as open source app. This SERVICE is provided by Little Feet Service Pvt Ltd at no cost and is intended for use as is.
                 </p>
                 <p>
-                    This page is used to inform visitors regarding our policies with the collection, use, and disclosure of Personal Information if anyone decided to use our Service.<br />
+                    This page is used to inform visitors regarding our policies with the collection, use, and disclosure of Personal Information if anyone decided to use our Service.
 
                 </p>
                 <p>
