@@ -33,7 +33,7 @@
                 </p>
                 <p><b>Changes to This Privacy Policy</b> We may update our Privacy Policy from time to time. Thus, you are advised to review this page periodically for any changes. we will notify you of any changes by posting the new Privacy Policy on this page. These changes are effective immediately after they are posted on this page.</p>
                 <p>
-                    Contact Us If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at Little Feet Services Pvt Ltd, 169, Habibullah Road, Chennai – 600 017. India, or through our <a href="https://littlefeetservices.com/" target="_blank">Website</a>.
+                    Contact Us If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at Little Feet Services Pvt Ltd, 169, Habibullah Road, Chennai – 600 017. India, or through our <a href="https://littlefeetservices.com/" target ="_blank">Website</a>.
                 </p>
                 <p>
                     [Last Updated: 10th February 2020]
