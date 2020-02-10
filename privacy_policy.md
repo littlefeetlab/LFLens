@@ -11,8 +11,8 @@
                 <p>We have not included the app with any known third-party trackers and we knowingly don't share data with third-parties. It uses Microsoft Azure Cognitive services for identifying the objects in the pictures taken. LF Lens is built on Microsoft Xamarin Framework, and is made available as open-source at <a href="github.com/littlefeetlab">github.com/littlefeetlab</a>.</p>
 
                
-                    <h5>Information Collection and Use</h5>
-                    <p> For a better experience, while using our Service, we may require you to optionally provide us with certain personally identifiable information: users name, and, email address, these will retained by us and used as described in this privacy policy. Apart from this, information like the actual pictures and your Google account that app requires to function will be retained on your device and is not collected by us in any way.</p>
+ Information Collection and Use
+                     For a better experience, while using our Service, we may require you to optionally provide us with certain personally identifiable information: users name, and, email address, these will retained by us and used as described in this privacy policy. Apart from this, information like the actual pictures and your Google account that app requires to function will be retained on your device and is not collected by us in any way.
                 <p>Like many of the Android apps distributed through Google Play Store, the app does use third party services that may collect information used to identify you. Link to privacy policy of third party service providers used by the app * Google Play Services * Microsoft Azure Services.</p>
                 <p>
                     <b>Log Data</b>
