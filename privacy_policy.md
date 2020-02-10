@@ -4,7 +4,6 @@
                 </p>
                 <p>
                     This page is used to inform visitors regarding our policies with the collection, use, and disclosure of Personal Information if anyone decided to use our Service.
-
                 </p>
                 <p>
                     This page is used to inform visitors regarding our policies with the collection, use, and disclosure of Personal Information if anyone decided to use our Service.
@@ -12,11 +11,11 @@
                 <p>We have not included the app with any known third-party trackers and we knowingly don't share data with third-parties. It uses Microsoft Azure Cognitive services for identifying the objects in the pictures taken. LF Lens is built on Microsoft Xamarin Framework, and is made available as open-source at <a href="github.com/littlefeetlab">github.com/littlefeetlab</a>.</p>
 
                 <p>
-                    <b>Information Collection and Use</b><br />
+                    <b>Information Collection and Use</b>
                     For a better experience, while using our Service, we may require you to optionally provide us with certain personally identifiable information: users name, and, email address, these will retained by us and used as described in this privacy policy. Apart from this, information like the actual pictures and your Google account that app requires to function will be retained on your device and is not collected by us in any way.</>
                 <p>Like many of the Android apps distributed through Google Play Store, the app does use third party services that may collect information used to identify you. Link to privacy policy of third party service providers used by the app * Google Play Services * Microsoft Azure Services.</p>
                 <p>
-                    <b>Log Data</b><br />
+                    <b>Log Data</b>
                     We want to inform you that whenever you use our Service, in a case of an error in the app we may collect data and information (through third party products) on your phone called Log Data. This Log Data may include information such as your device Internet Protocol (“IP”) address, device name, operating system version, the configuration of the app when utilizing our Service, the time and date of your use of the Service, and other statistics.
                 </p>
 
