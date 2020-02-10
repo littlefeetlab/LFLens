@@ -8,7 +8,7 @@
                 <p>
                     This page is used to inform visitors regarding our policies with the collection, use, and disclosure of Personal Information if anyone decided to use our Service.
                 </p>
-                <p>We have not included the app with any known third-party trackers and we knowingly don't share data with third-parties. It uses Microsoft Azure Cognitive services for identifying the objects in the pictures taken. LF Lens is built on Microsoft Xamarin Framework, and is made available as open-source at <a href="github.com/littlefeetlab">github.com/littlefeetlab</a>.</p>
+                <p>We have not included the app with any known third-party trackers and we knowingly don't share data with third-parties. It uses Microsoft Azure Cognitive services for identifying the objects in the pictures taken. LF Lens is built on Microsoft Xamarin Framework, and is made available as open-source at <a href="https://github.com/littlefeetlab/">github.com/littlefeetlab</a>.</p>
 
              
 <b> Information Collection and Use</b>
@@ -33,7 +33,7 @@
                 </p>
                 <p><b>Changes to This Privacy Policy</b> We may update our Privacy Policy from time to time. Thus, you are advised to review this page periodically for any changes. we will notify you of any changes by posting the new Privacy Policy on this page. These changes are effective immediately after they are posted on this page.</p>
                 <p>
-                    Contact Us If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at Little Feet Services Pvt Ltd, 169, Habibullah Road, Chennai – 600 017. India, or through our <a href="https://littlefeetservices.com/">Website</a>.
+                    Contact Us If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at Little Feet Services Pvt Ltd, 169, Habibullah Road, Chennai – 600 017. India, or through our <a href="https://littlefeetservices.com/" target="_blank">Website</a>.
                 </p>
                 <p>
                     [Last Updated: 10th February 2020]
