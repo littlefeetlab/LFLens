@@ -145,7 +145,7 @@ namespace LFLens.Helpers
         {
             get
             {
-                return AppSettings.GetValueOrDefault("StoreHistory", false);
+                return AppSettings.GetValueOrDefault("StoreHistory", true);
             }
             set
             {

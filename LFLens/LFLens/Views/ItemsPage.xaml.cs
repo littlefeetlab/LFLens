@@ -427,9 +427,10 @@ namespace LFLens.Views
         }
 
         [Obsolete]
-        private async void LogoutMenuItem_Clicked(object sender, EventArgs e)
+        private void LogoutMenuItem_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new OAuth());
+            // await Navigation.PushAsync(new OAuth());
+            Application.Current.MainPage = new OAuth();
             LFLens.Helpers.Settings.AccessToken = null;
             LFLens.Helpers.Settings.AccessTokenExpirationDate = DateTime.UtcNow;
 

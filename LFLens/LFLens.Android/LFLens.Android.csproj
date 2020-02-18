@@ -142,7 +142,6 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\littlefeet_logo.png" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <AndroidResource Include="Resources\mipmap-anydpi-v26\icon.xml" />
   </ItemGroup>

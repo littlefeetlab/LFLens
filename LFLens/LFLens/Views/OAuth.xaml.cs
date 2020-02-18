@@ -100,26 +100,29 @@ namespace LFLens.Views
                 LFLens.Helpers.Settings.AccessToken = null;
                 LFLens.Helpers.Settings.RefreshToken = null;
                 LFLens.Helpers.Settings.AccessTokenExpirationDate = DateTime.UtcNow;
+
                 await store.SaveAsync(account = e.Account, OAuthConstants.AppName);
                 if (account != null)
                 {
 
-                   
+                    LFLens.Helpers.Settings.Username = user.Name;
+                    LFLens.Helpers.Settings.EmailID = user.Email;
+                    LFLens.Helpers.Settings.UserProfileURL = user.Picture;
+
+
                     LFLens.Helpers.Settings.AccessToken = account.Properties["access_token"].ToString();
                     LFLens.Helpers.Settings.RefreshToken = account.Properties["refresh_token"].ToString();
 
                     LFLens.Helpers.Settings.AccessTokenExpirationDate = DateTime.UtcNow.AddSeconds(Convert.ToDouble(account.Properties["expires_in"].ToString()));
-                   
-                    await Navigation.PushAsync(new ItemsPage());
+
+                
+                  Application.Current.MainPage = new MainPage();
+                 
                     //     
                 }
 
 
               
-                LFLens.Helpers.Settings.Username = user.Name;
-                LFLens.Helpers.Settings.EmailID = user.Email;
-                LFLens.Helpers.Settings.UserProfileURL = user.Picture;
-                
 
 
             }
